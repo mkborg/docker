@@ -1,0 +1,37 @@
+make -C /home/mk/work/apl/active-protection-linux.git/buildsystem -f docker.mak docker-build
+
+
+yum install -y docker
+
+--- /etc/sysconfig/docker.ORIG  2018-05-11 15:42:37.000000000 +0300
++++ /etc/sysconfig/docker       2018-05-17 12:58:48.443609588 +0300
+@@ -1,7 +1,7 @@
+ # /etc/sysconfig/docker
+
+ # Modify these options if you want to change the way the docker daemon runs
+-OPTIONS='--selinux-enabled --log-driver=journald --signature-verification=false'
++OPTIONS='--log-driver=journald --signature-verification=false'
+ if [ -z "${DOCKER_CERT_PATH}" ]; then
+     DOCKER_CERT_PATH=/etc/docker
+ fi
+
+groupadd docker
+# replace USER with actual ordinary user id
+gpasswd -a USER docker
+
+systemctl enable docker.service
+# service docker start
+systemctl start docker.service
+
+cd active-protection-linux.git/buildsystem
+./docker_build.sh
+
+
+
+[latest docker]
+yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
+yum install -y yum-utils
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install -y docker-ce docker-ce-cli containerd.io
+systemctl enable docker.service
+systemctl start docker.service

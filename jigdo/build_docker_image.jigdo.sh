@@ -1,0 +1,1 @@
+../scripts/build_docker_image.sh
