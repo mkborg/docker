@@ -1,0 +1,6 @@
+#!/bin/bash -x
+cd /mnt/vg/git/WORK/mkborg/docker/debian_uml_vde
+./mount.sh
+./net.sh
+bash
+./halt_uml.sh
